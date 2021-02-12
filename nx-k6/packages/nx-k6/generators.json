@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-k6",
+  "version": "0.0.1",
+  "generators": {
+    "nx-k6": {
+      "factory": "./src/generators/nx-k6/generator",
+      "schema": "./src/generators/nx-k6/schema.json",
+      "description": "nx-k6 generator"
+    }
+  }
+}

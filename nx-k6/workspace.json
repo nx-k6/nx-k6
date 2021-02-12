@@ -1,0 +1,79 @@
+{
+  "version": 2,
+  "projects": {
+    "nx-k6": {
+      "root": "packages/nx-k6",
+      "sourceRoot": "packages/nx-k6/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/nx-k6/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/packages/nx-k6"
+          ],
+          "options": {
+            "jestConfig": "packages/nx-k6/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/packages/nx-k6",
+            "tsConfig": "packages/nx-k6/tsconfig.lib.json",
+            "packageJson": "packages/nx-k6/package.json",
+            "main": "packages/nx-k6/src/index.ts",
+            "assets": [
+              "packages/nx-k6/*.md",
+              {
+                "input": "./packages/nx-k6/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-k6",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-k6",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-k6-e2e": {
+      "projectType": "application",
+      "root": "e2e/nx-k6-e2e",
+      "sourceRoot": "e2e/nx-k6-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-k6:build",
+            "npmPackageName": "@nx-k6/nx-k6",
+            "pluginOutputPath": "dist/packages/nx-k6",
+            "jestConfig": "e2e/nx-k6-e2e/jest.config.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}
